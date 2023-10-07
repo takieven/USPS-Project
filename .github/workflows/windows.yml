@@ -18,8 +18,15 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - uses: actions/cache@v3
+      - name: Cache gradle
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build with Gradle
         run: |
@@ -33,4 +40,4 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            build\compose\binaries\main\msi\USPS-1.0.0.msi
+            build/compose/binaries/main/msi/USPS-1.0.0.msi
