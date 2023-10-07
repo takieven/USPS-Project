@@ -22,7 +22,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: .\gradlew :createReleaseDistributable
+        run: |
+          .\gradlew :createReleaseDistributable
+          tree build/compose/binaries/
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
